@@ -31,8 +31,10 @@ app.get('/api/posts', apiController.getPosts);
 app.put('/api/post/:id', apiController.putPost);
 
 app.post('/api/uploads', apiController.uploadPost);
-2
-var server = app.listen(2002, function() {
+
+var port = process.env.PORT || 2002;
+
+var server = app.listen(port, function() {
     console.log('Express server listening on port ' + server.address().port);
 });
 

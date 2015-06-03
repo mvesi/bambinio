@@ -8,7 +8,10 @@ var path = require('path');
 // };
 
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/bambinio2');
+// Previously for when just using locally
+// mongoose.connect('mongodb://localhost/bambinio2');
+mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/bambinio2');
+
 
 var app = express();
 // app.set('view engine', 'jade');
@@ -28,7 +31,7 @@ app.get('/api/posts', apiController.getPosts);
 app.put('/api/post/:id', apiController.putPost);
 
 app.post('/api/uploads', apiController.uploadPost);
-
+2
 var server = app.listen(2002, function() {
     console.log('Express server listening on port ' + server.address().port);
 });

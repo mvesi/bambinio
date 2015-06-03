@@ -1,4 +1,4 @@
-var bambinioApp = angular.module('bambinioApp', ['ngRoute','ui.bootstrap']);
+var bambinioApp = angular.module('bambinioApp', ['ngRoute','ui.bootstrap','ngFileUpload']);
 
 bambinioApp.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
     $routeProvider
@@ -41,7 +41,7 @@ $('#postModal').on('hide.bs.modal', function() {
 // $('#postModal').trigger('hide.bs.modal');
 
 
-bambinioApp.controller('profileController', function($scope, $http, $timeout, $route){
+bambinioApp.controller('profileController', function($scope, $http, $timeout, $route, Upload){
     $scope.users=[{userFirst: "Jennifer", userLast: "Bassett", childFirst: "Miles", childLast: "Bassett"}, {userFirst: "Heather", userLast: "Eistein", childFirst: "Max", childLast: "Einstein"}];
     $scope.postsLimit = 3;
     // $scope.searchTerm = '';
@@ -165,7 +165,7 @@ bambinioApp.controller('profileController', function($scope, $http, $timeout, $r
             console.log(data);
             // Not ideal as $route.reload() resets the routers, but wasn't working in modal with just gePosts().  getPosts() does work just done from the quick status form.
             // getPosts();
-            $route.reload();
+            // $route.reload();
         })
         .error(function(data){
             console.log(data);
@@ -174,119 +174,28 @@ bambinioApp.controller('profileController', function($scope, $http, $timeout, $r
 
     // AWS Controller:
     $scope.upload = function() {
-        // AWS.config.update({ accessKeyId: $scope.creds.access_key, secretAccessKey: $scope.creds.secret_key });
-        // AWS.config.region = 'us-east-1';
-        // AWS.config.region = 'oregon';
-        AWS.config.update({ accessKeyId: 'enter accesss key', secretAccessKey: 'enter secret key' });
-        // var bucket = new AWS.S3({ params: { Bucket: $scope.creds.bucket } });
-        var bucket = new AWS.S3({ params: { Bucket: 'enter bucket' } });
-        // console.log($scope);
-        if($scope.file) {
-            // Perform File Size Check First
-            var fileSize = Math.round(parseInt($scope.file.size));
-            if (fileSize > $scope.sizeLimit) {
-              toastr.error('Sorry, your attachment is too big. <br/> Maximum '  + $scope.fileSizeLabel() + ' file attachment allowed','File Too Large');
-              return false;
-            }
-            // Prepend Unique String To Prevent Overwrites
-            var uniqueFileName = $scope.uniqueString() + '-' + $scope.file.name;
+        console.log($scope.file);
+        $('#uploadPost').button('loading');
+        Upload.upload({
+            url: "/api/uploads",
+            fields: {postText: $scope.postText},
+            file: $scope.file
+        }).success(function(data){
+            console.log(data);
+            $('#uploadPost').button('reset');
+            $route.reload();
+        });
 
-            var params = { Key: uniqueFileName, ContentType: $scope.file.type, Body: $scope.file, ServerSideEncryption: 'AES256' };
+        // $http.post('/api/uploads', {file: $scope.imageDateForm.file})
+        // .success(function(data){
+        //     console.log(data);
 
-            var createPost = function(){                
-                if(!$scope.imageDate){
-                    $scope.imageDate = Date.now();
-                }
-                var postType = "glyphicon glyphicon-picture";
-                console.log($scope.imageDate);
-                $http.post('/api/posts', {postText: $scope.postText, s3Link: uniqueFileName, postedAt: $scope.imageDate, postType: postType})
-                .success(function(data){
-                    console.log(data);
-                    // getPosts();
-                    $route.reload();
-                })
-                .error(function(data){
-                    console.log(data);
-                });
-                $scope.imageDateForm.$setPristine();
-            };
-
-            
-
-            bucket.putObject(params, function(err, data) {
-              if(err) {
-                toastr.error(err.message,err.code);
-                return false;
-              }
-              else {
-                // Upload Successfully Finished
-                toastr.success('File Uploaded Successfully', 'Done');
-
-                
-                createPost();
-
-                // Reset The Progress Bar
-                setTimeout(function() {
-                  $scope.uploadProgress = 0;
-                  $scope.$digest();
-                }, 5000);
-              }
-              $('#postModal').modal('toggle');
-            })
-            .on('httpUploadProgress',function(progress) {
-              $scope.uploadProgress = Math.round(progress.loaded / progress.total * 100);
-              $scope.$digest();
-            });
-
-          }
-          else {
-            // No File Selected
-            toastr.error('Please select a file to upload');
-          }
-        };
-
-        $scope.fileSizeLabel = function() {
-        // Convert Bytes To MB
-        return Math.round($scope.sizeLimit / 1024 / 1024) + 'MB';
-      };
-
-    $scope.uniqueString = function() {
-      var text     = "";
-      var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
-      for( var i=0; i < 8; i++ ) {
-        text += possible.charAt(Math.floor(Math.random() * possible.length));
-      }
-      return text;
+        //     $route.reload();
+        // })
+        // .error(function(data){
+        //     console.log(data);
+        // });
     };
-
-    // End AWS Controller code
-    
-    // Begin Carousel Code
-    // $scope.myInterval = 5000;
-    //   var slides = $scope.slides = [];
-    //   $scope.addSlide = function() {
-    //     var newWidth = 600 + slides.length + 1;
-    //     slides.push({
-    //       image: 'http://placekitten.com/' + newWidth + '/300',
-    //       text: ['More','Extra','Lots of','Surplus'][slides.length % 4] + ' ' +
-    //         ['Cats', 'Kittys', 'Felines', 'Cutes'][slides.length % 4]
-    //     });
-    //   };
-    //   for (var i=0; i<4; i++) {
-    //     $scope.addSlide();
-    //   }
-// carousel code with data fed in hopefully
-      // $scope.myInterval = 5000;
-      //   var slides = $scope.slides = [];
-        // $http({
-        //         method: 'Get',
-        //         url: '/api/posts'
-        //     }).success(function (data, status, headers, config) {
-        //         $scope.slides = data;
-        //     }).error(function (data, status, headers, config) {
-        //         $scope.message = 'Unexpected Error';
-        //     });
 
 });
 
@@ -309,93 +218,90 @@ bambinioApp.directive('file', function() {
   };
 });
 
+
+
 //  *** End AWS code
 
 
 // Below is the AWS code, in case I break it when I try to send it to the back end.
-//     $scope.upload = function() {
-//         AWS.config.update({ accessKeyId: $scope.creds.access_key, secretAccessKey: $scope.creds.secret_key });
-//         AWS.config.region = 'us-east-1';
-//         AWS.config.region = 'oregon';
-//         AWS.config.update({ accessKeyId: 'BLANK', secretAccessKey: 'BLANK' });
-//         // var bucket = new AWS.S3({ params: { Bucket: $scope.creds.bucket } });
-//         var bucket = new AWS.S3({ params: { Bucket: 'BLANK' } });
-//         // console.log($scope);
-//         if($scope.file) {
-//             // Perform File Size Check First
-//             var fileSize = Math.round(parseInt($scope.file.size));
-//             if (fileSize > $scope.sizeLimit) {
-//               toastr.error('Sorry, your attachment is too big. <br/> Maximum '  + $scope.fileSizeLabel() + ' file attachment allowed','File Too Large');
-//               return false;
+// $scope.upload = function() {
+//     AWS.config.update({ accessKeyId: 'enter accesss key', secretAccessKey: 'enter secret key' });
+//     var bucket = new AWS.S3({ params: { Bucket: 'enter bucket' } });
+//     if($scope.file) {
+//         // Perform File Size Check First
+//         var fileSize = Math.round(parseInt($scope.file.size));
+//         if (fileSize > $scope.sizeLimit) {
+//           toastr.error('Sorry, your attachment is too big. <br/> Maximum '  + $scope.fileSizeLabel() + ' file attachment allowed','File Too Large');
+//           return false;
+//         }
+//         // Prepend Unique String To Prevent Overwrites
+//         var uniqueFileName = $scope.uniqueString() + '-' + $scope.file.name;
+
+//         var params = { Key: uniqueFileName, ContentType: $scope.file.type, Body: $scope.file, ServerSideEncryption: 'AES256' };
+
+//         var createPost = function(){                
+//             if(!$scope.imageDate){
+//                 $scope.imageDate = Date.now();
 //             }
-//             // Prepend Unique String To Prevent Overwrites
-//             var uniqueFileName = $scope.uniqueString() + '-' + $scope.file.name;
+//             var postType = "glyphicon glyphicon-picture";
+//             console.log($scope.imageDate);
+//             $http.post('/api/posts', {postText: $scope.postText, s3Link: uniqueFileName, postedAt: $scope.imageDate, postType: postType})
+//             .success(function(data){
+//                 console.log(data);
 
-//             var params = { Key: uniqueFileName, ContentType: $scope.file.type, Body: $scope.file, ServerSideEncryption: 'AES256' };
-
-//             var createPost = function(){                
-//                 if(!$scope.imageDate){
-//                     $scope.imageDate = Date.now();
-//                 }
-//                 var postType = "glyphicon glyphicon-picture";
-//                 console.log($scope.imageDate);
-//                 $http.post('/api/posts', {postText: $scope.postText, s3Link: uniqueFileName, postedAt: $scope.imageDate, postType: postType})
-//                 .success(function(data){
-//                     console.log(data);
-//                     // getPosts();
-//                     $route.reload();
-//                 })
-//                 .error(function(data){
-//                     console.log(data);
-//                 });
-//                 $scope.imageDateForm.$setPristine();
-//             };
-
-            
-
-//             bucket.putObject(params, function(err, data) {
-//               if(err) {
-//                 toastr.error(err.message,err.code);
-//                 return false;
-//               }
-//               else {
-//                 // Upload Successfully Finished
-//                 toastr.success('File Uploaded Successfully', 'Done');
-
-                
-//                 createPost();
-
-//                 // Reset The Progress Bar
-//                 setTimeout(function() {
-//                   $scope.uploadProgress = 0;
-//                   $scope.$digest();
-//                 }, 5000);
-//               }
-//               $('#postModal').modal('toggle');
+//                 $route.reload();
 //             })
-//             .on('httpUploadProgress',function(progress) {
-//               $scope.uploadProgress = Math.round(progress.loaded / progress.total * 100);
-//               $scope.$digest();
+//             .error(function(data){
+//                 console.log(data);
 //             });
-
-//           }
-//           else {
-//             // No File Selected
-//             toastr.error('Please select a file to upload');
-//           }
+//             $scope.imageDateForm.$setPristine();
 //         };
 
-//         $scope.fileSizeLabel = function() {
-//         // Convert Bytes To MB
-//         return Math.round($scope.sizeLimit / 1024 / 1024) + 'MB';
-//       };
+        
 
-//     $scope.uniqueString = function() {
-//       var text     = "";
-//       var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+//         bucket.putObject(params, function(err, data) {
+//           if(err) {
+//             toastr.error(err.message,err.code);
+//             return false;
+//           }
+//           else {
+//             // Upload Successfully Finished
+//             toastr.success('File Uploaded Successfully', 'Done');
 
-//       for( var i=0; i < 8; i++ ) {
-//         text += possible.charAt(Math.floor(Math.random() * possible.length));
+            
+//             createPost();
+
+//             // Reset The Progress Bar
+//             setTimeout(function() {
+//               $scope.uploadProgress = 0;
+//               $scope.$digest();
+//             }, 5000);
+//           }
+//           $('#postModal').modal('toggle');
+//         })
+//         .on('httpUploadProgress',function(progress) {
+//           $scope.uploadProgress = Math.round(progress.loaded / progress.total * 100);
+//           $scope.$digest();
+//         });
+
 //       }
-//       return text;
+//       else {
+//         // No File Selected
+//         toastr.error('Please select a file to upload');
+//       }
 //     };
+
+//     $scope.fileSizeLabel = function() {
+//     // Convert Bytes To MB
+//     return Math.round($scope.sizeLimit / 1024 / 1024) + 'MB';
+//   };
+
+// $scope.uniqueString = function() {
+//   var text     = "";
+//   var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+//   for( var i=0; i < 8; i++ ) {
+//     text += possible.charAt(Math.floor(Math.random() * possible.length));
+//   }
+//   return text;
+// };

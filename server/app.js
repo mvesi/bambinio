@@ -1,5 +1,6 @@
 var express = require('express');
 var bodyParser = require('body-parser');
+var multer = require('multer');
 var indexController = require('./controllers/index.js');
 var apiController = require('./controllers/api.js');
 var path = require('path');
@@ -21,6 +22,7 @@ app.set('view engine', 'html');
 app.use(express.static(path.join(__dirname, '../client', 'public')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
+app.use(multer({dest: './uploads'}));
 
 app.get('/', indexController.index);
 

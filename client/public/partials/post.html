@@ -1,0 +1,25 @@
+<div id='post-list'>   
+  <div class="panel panel-default" ng-repeat="post in posts | orderBy:'-postedAt'">
+     <div class="panel-heading"><span class="pull-right">{{post.postedAt | date:'longDate'}}</span> <h4>Post</h4></div>
+      <div class="panel-body">
+        <span> {{post.text}} </span>
+        <div class="clearfix"></div>
+       
+        <hr>
+        <div class="pull-right"><span>{{post.score}}</span> Thumbs up!</div>
+        <br>
+        <br>
+          <div id="upvote">
+            <form>
+            <div class="input-group">
+              <div class="input-group-btn">
+              <vote label="1" vote-up="upVote()"><button class="btn btn-default" ng-click="upVote()">+1</button></vote>
+              </div>
+              <input type="text" class="form-control" placeholder="What do you think?"><div class="input-group-btn">
+              <button class="btn btn-default">Comment</button>
+            </div>
+            </form>
+          </div>
+      </div>
+  </div>
+</div>

@@ -1,0 +1,229 @@
+<!-- <div class="wrapper">
+      <div class="box">
+          <div class="row row-offcanvas row-offcanvas-left"> -->
+              <div class="padding">
+                  <div class="full col-sm-9">
+                    
+                      <!-- content -->                      
+                      <div class="row">
+                        
+                       <!-- main col left --> 
+                       <div class="col-sm-5">
+                         
+                            <div class="panel panel-default">
+                              <div class="panel-thumbnail"><img src="https://s3.amazonaws.com/bam-bucket/IMG_4552.JPG" class="img-responsive"></div>
+                              <div class="panel-body">
+                                <p class="lead">Liam Einstein</p>
+                                <p>Liam has <span>{{posts.length}}</span> posts in his timeline</p>
+                                
+                                <p>
+                                  <!-- <img src="https://s3.amazonaws.com/bam-bucket/photo.JPG" width="28px" height="28px"> -->
+                                </p>
+                              </div>
+                            </div>
+                         
+                            <!-- Jump to a Moment in Time -->
+                            <div class="panel panel-default"> 
+                                 <form name="dateJumpForm">
+                                    <div class="panel-heading">
+                                     <label><h4>
+                                         Jump to a moment in time
+                                         </h4><span style="color:red" ng-show="dateJumpForm.jumpdate.$error.pattern">(1 Jan 2013)</span>
+                                     </label><br>
+                                    </div>
+                                    <div class="panel-body">
+                                     <input
+                                         type="date"
+                                         id="test"
+                                         name="jumpdate"
+                                         ng-model="jumpDate"
+                                         popup="d MMM yyyy"
+                                         options="dateOptions"
+                                         opened="opened"
+                                         custom-datepicker/>
+                                     </div>
+                                 </form>
+                                      <!-- can take out pre tag & contents, just to see output -->
+                                     <!-- <pre>
+                                     jumpDate = {{jumpDate}}
+                                     </pre>
+ -->
+                                 <script type="text/ng-template" id="custom-datepicker.html">
+                                     <div class="form-inline enhanced-datepicker">
+                                         <label>
+                                             <input
+                                                 type="text"
+                                                 id="{{id}}"
+                                                 name="{{name}}"
+                                                 ng-model="ngModel"
+                                                 datepicker-popup="{{popup}}"
+                                                 datepicker-options="{{options}}"
+                                                 date-disabled="{{dateDisabled}}"
+                                                 min="{{min}}"
+                                                 max="{{max}}"
+                                                 open="opened"
+                                                 ng-pattern="/^(?:[1-9]|1\d|2\d|3[0-1]) (?:jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec) (?:1|2)(?:\d{3})$/gim"/>
+                                             <span class="btn"><i class="icon-calendar"></i></span>
+                                         </label>
+                                     </div>
+                                 </script>
+                              </div>
+                              <!-- End Jump to a -->
+
+                              <!-- Quick Status Update -->
+<!--                             <div id="create-post" class="well"> 
+                                 <form ng-submit="createStory()" class="form-horizontal">
+                                  <h4>Quick Status Update</h4>
+                                   <div class="form-group" style="padding:14px;">
+                                    <textarea class="form-control" type="text" placeholder="What's up with Liam?" ng-model="storyForm.postText"></textarea> -->
+                                    <!-- <input ng-model="creds.access_key" type="text" class="form-control" placeholder="Access Key">
+                                    <input ng-model="creds.secret_key" type="text" class="form-control" placeholder="Secret Key">
+                                    <input ng-model="creds.bucket" type="text" class="form-control" placeholder="Bucket Name">
+                                    <input class="form-control bottom-marg-15" ng-model="file" type="file" name="file" file></input> -->
+ <!--                                  <br>
+
+                                  <button class="btn btn-green pull-right" type="submit">Post</button> -->
+                                  <!-- <a class="btn btn-primary btn-block btn-lg" ng-click="upload()">Upload</a> -->
+                                <!--   </div>      
+                                  
+                                </form> -->
+                                <!-- <div class="progress">
+                                  <div class="progress-bar" role="progressbar" aria-valuenow="{{ uploadProgress }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ uploadProgress }}%;">
+                                    {{ uploadProgress == 0 ? '' : uploadProgress + '%' }}
+                                </div>
+                              </div> -->
+                            <!-- </div> -->
+                            <!-- End Quick Status Update -->
+
+                            <div class="panel panel-default">
+                              <div class="panel-heading"><h4>What do you want to do? </h4></div>
+                                <div class="panel-body">
+                                  <div class="list-group">
+                                    <a href="#webCamModal" class="list-group-item" data-toggle="modal" ng-click="runCamera()">Snap a picture</a>
+                                    <a href="#slideModal" role="button" data-toggle="modal" class="list-group-item" ng-click="getPosts()">See a slideshow</a>
+                                    <a href="#albumModal" role="button" data-toggle="modal" class="list-group-item">View Liam's photos</a>
+                                  </div>
+                                </div>
+                            </div>
+                                                           
+                         
+                        </div>
+                        
+                        <!-- main col right -->
+                        <div class="col-sm-7">
+                        <!-- Start Quick Status Update -->
+                          <div id="create-post" class="well"> 
+                               <form ng-submit="createStory()" class="form-horizontal">
+                                <h4>Quick Status Update</h4>
+                                 <div class="form-group" style="padding:14px;">
+                                  <textarea class="form-control" type="text" placeholder="What's up with Liam?" ng-model="quickForm.postText"></textarea>
+                                <br>
+
+                                <button class="btn btn-green pull-right" type="submit">Post</button>
+                                </div>      
+                                
+                              </form>
+                          </div>
+                          <!-- end quick status update -->
+                             
+                              <!-- <div class="well"> 
+                                 <form name="dateJumpForm">
+                                     <label>
+                                         Jump to a Date
+                                         <span style="color:red" ng-show="dateJumpForm.jumpdate.$error.pattern">(1 Jan 2013)</span>
+                                     </label>
+                                     <input
+                                         type="date"
+                                         id="test"
+                                         name="jumpdate"
+                                         ng-model="jumpDate"
+                                         popup="d MMM yyyy"
+                                         options="dateOptions"
+                                         opened="opened"
+                                         custom-datepicker/>
+                                 </form> -->
+                                      <!-- can take out pre tag & contents, just to see output -->
+                                     <!-- <pre>
+                                     jumpDate = {{jumpDate}}
+                                     </pre>
+ -->
+                                 <!-- <script type="text/ng-template" id="custom-datepicker.html">
+                                     <div class="form-inline enhanced-datepicker">
+                                         <label>
+                                             <input
+                                                 type="text"
+                                                 id="{{id}}"
+                                                 name="{{name}}"
+                                                 ng-model="ngModel"
+                                                 datepicker-popup="{{popup}}"
+                                                 datepicker-options="{{options}}"
+                                                 date-disabled="{{dateDisabled}}"
+                                                 min="{{min}}"
+                                                 max="{{max}}"
+                                                 open="opened"
+                                                 ng-pattern="/^(?:[1-9]|1\d|2\d|3[0-1]) (?:jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec) (?:1|2)(?:\d{3})$/gim"/>
+                                             <span class="btn"><i class="icon-calendar"></i></span>
+                                         </label>
+                                     </div>
+                                 </script>
+                              </div> -->
+                          
+          <!-- Posts will go here dynamically via Angular -->
+                          <div id='post-list'>   
+                            <div class="panel panel-default" ng-repeat="post in posts | orderBy:'-postedAt' | filter: {postText: searchText} | dateFilter: jumpDate | limitTo: postsLimit">
+                               <div class="panel-heading"><span class="pull-right">{{post.postedAt | date:'longDate'}}</span> <h4><span class={{post.postType}}><span> </span><span>{{post.milestone}}</span></span></h4></div>
+                                <div class="panel-body">
+                                  <!-- <p> {{post.milestone}} </p> -->
+                                  <img class="img-responsive" ng-src="https://s3.amazonaws.com/bam-bucket/{{post.s3Link}}">
+                                  <br>
+                                  <p> {{post.postText}} </p>
+                                  <div class="clearfix"></div>
+                                 
+                                  <hr>
+                                  <div class="pull-right" ng-if="post.score > 0"><span>{{post.score}}</span> Thumbs up!</div>
+                                  <br>
+                                  <br>
+                                    <div id="upvote">
+                                      <form>
+                                      <div class="input-group">
+                                        <div class="input-group-btn">
+                                        <!-- used 2 way data-binding auto update score and then it is also updated in DB via upVote() -->
+                                        <button class="btn btn-default {{post._id}}" ng-click="post.score = post.score+1 ; upVote(post._id)">+1</button>
+                                        </div>
+                                        <input type="text" ng-model="postComment" class="form-control" placeholder="What do you think?"><div class="input-group-btn">
+                                        <button ng-click="leaveComment(post._id,postComment)" class="btn btn-default">Comment</button>
+                                      </div>
+                                      </form>
+
+                                    </div>
+                                </div>
+                                <br>
+                                <div ng-repeat="comment in post.comments">
+                                  <div class="panel">
+                                    <span class="author">{{comment.author}}</span> <span>{{comment.content}}</span>
+                                  </div>
+                                </div>
+
+                            </div>
+                          </div>
+                                            
+                          
+                        </div>
+                        <div ng-show="posts.length > postsLimit">
+                          <a href="#/" class="show-more" ng-click="postsLimit = postsLimit+3 ; getPosts()">↓ Show More Posts ↓</a>
+                        </div>
+                     </div>
+                    <hr>
+                      
+                    
+                  </div><!-- /col-9 -->
+              </div><!-- /padding -->
+          </div>
+
+
+
+          <!-- /main -->
+        
+<!--       </div>
+  </div>
+</div> -->

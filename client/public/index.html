@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="bambinioApp">
+    <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <meta charset="utf-8">
+      <title>Bambin.io</title>
+      <!-- <meta name="generator" content="Bootply" /> -->
+      <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+      <link href='//fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
+      <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+      <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+      <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+      <link href="styles.css" rel="stylesheet">
+    </head>
+    <body ng-controller="profileController" class="ng-scope">
+      <div class="wrapper">
+          <div class="box">
+              <div class="row row-offcanvas row-offcanvas-left">
+                            
+                
+                  <!-- sidebar -->
+                  <div class="column col-sm-1 col-xs-1 sidebar-offcanvas" id="sidebar">
+                                        
+                      <!-- tiny only nav-->
+                    <ul class="nav visible-xs" id="xs-menu">
+                          <li><a href="#featured" class="text-center"><i class="glyphicon glyphicon-list-alt"></i></a></li>
+                          <li><a href="#stories" class="text-center"><i class="glyphicon glyphicon-list"></i></a></li>
+                          <li><a href="#" class="text-center"><i class="glyphicon glyphicon-paperclip"></i></a></li>
+                          <li><a href="#" class="text-center"><i class="glyphicon glyphicon-refresh"></i></a></li>
+                      </ul>
+                    
+                  </div>
+                  <!-- /sidebar -->
+                
+                  <!-- main right col -->
+                  <div class="column col-sm-10 col-xs-11" id="main">
+                      
+                      <!-- top nav -->
+                      <div class="navbar navbar-blue navbar-static-top">  
+                          <div class="navbar-header">
+                            <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-collapse">
+                              <span class="sr-only">Toggle</span>
+                              <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                            </button>
+                            <a href="/#/" class="navbar-brand logo">bambin.io</a>
+                          </div>
+                          <nav class="collapse navbar-collapse" role="navigation">
+                          <form class="navbar-form navbar-left">
+                              <div class="input-group input-group-sm" style="max-width:360px;">
+                                <input type="text" class="form-control" placeholder="Search Posts" name="srch-term" id="srch-term" ng-model="searchText">
+                                <div class="input-group-btn">
+                                  <!-- <button class="btn btn-default" type="submit" ng-click="searchTerm = searchText ; getPosts()"><i class="glyphicon glyphicon-search"></i></button> -->
+                                </div>
+                              </div>
+                          </form>
+                          <ul class="nav navbar-nav">
+                           <!--  <li>
+                              <a href="#/"><i class="glyphicon glyphicon-home"></i> Home</a>
+                            </li> -->
+                            <li>                              
+                              <a href="#postModal" role="button" data-toggle="modal"><i class="glyphicon glyphicon-plus"></i> Post</a>
+                            </li>
+                            <li>
+                              <a href="#aboutMeModal"  data-toggle="modal"><span class="badge">About Liam</span></a>
+                            </li>
+                          </ul>
+                          <!-- <ul class="nav navbar-nav navbar-right">
+                            <li class="dropdown">
+                              <a href="#/" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-user"></i></a>
+                              <ul class="dropdown-menu">
+                                <li><a href="">Put</a></li>
+                                <li><a href="">Something</a></li>
+                                <li><a href="">More</a></li>
+                                <li><a href="">In</a></li>
+                                <li><a href="">Here</a></li>
+                              </ul>
+                            </li>
+                          </ul> -->
+                          </nav>
+                      </div>
+
+                      <div ng-view></div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+          </div>
+          <!-- Bootstrap UI Slideshow #slideModal-->
+          <div id="slideModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+          <div class="modal-dialog">
+          <div class="modal-content">
+            <div>
+              <div style="height: 305px">
+                <carousel interval=0>
+                  <slide ng-if="post.s3Link" ng-repeat="post in posts | limitTo: 10 | orderBy: '-postedAt'" active="slide.active">
+                    <img ng-if="post.s3Link" ng-src="https://s3.amazonaws.com/bam-bucket/{{post.s3Link}}" style="margin:auto;">
+                    <!-- <img ng-if="!post.s3Link" src="http://placehold.it/350x150" style="margin:auto;"> -->
+                    <div class="carousel-caption">
+                      <!-- <h4>Slide {{$index}}</h4> -->
+                      <p>{{post.postText}}</p>
+                    </div>
+                    <p>{{post.postText}}</p>
+                  </slide>
+                </carousel>
+              </div>
+              
+              <!-- <div class="row">
+                <div class="col-md-6">
+                  <button type="button" class="btn btn-info" ng-click="addSlide()">Add Slide</button>
+                </div>
+                <div class="col-md-6">
+                  Interval, in milliseconds: <input type="number" class="form-control" ng-model="myInterval">
+                  <br />Enter a negative number or 0 to stop the interval.
+                </div>
+              </div> -->
+            </div>
+          </div>
+          </div>
+          </div>
+          <!-- End Slideshow Modal -->
+  
+          <!-- Begin #albumModal -->
+          <div id="albumModal" class="modal fade album-modal" tabindex="-1" role="dialog" aria-hidden="true">
+          <div class="modal-dialog">
+          <div class="modal-content">
+          <!-- <div class="container"> -->
+
+              <div class="row">
+
+                  <div class="col-lg-12">
+                      <h3 class="page-header">Photo Gallery</h3>
+                        <div ng-repeat="post in posts | orderBy: '-postedAt'">
+                          <div class="col-lg-3 col-md-4 col-xs-6 thumb" ng-if="post.s3Link">
+                              <a class="thumbnail" href="/#/">
+                                  <img ng-src="https://s3.amazonaws.com/bam-bucket/{{post.s3Link}}" class="img-responsive">
+                              </a>
+                          </div>
+                        </div>
+                  </div>
+
+                  
+                  
+              </div>
+          </div>
+          </div>
+          </div>
+          <!-- End albumVModal -->
+
+
+          <!-- #webCam modal -->
+          <div id="webCamModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+          <div class="modal-dialog">
+          <div class="modal-content">
+            <div id="results" ng-model="webcamImage">Your captured image will appear here...</div>
+              <form>
+                <input ng-model="postText" type="text" class="form-control" placeholder="Image Description">
+                <input ng-model="webcamImage" type="text" class="form-control" value="bonkers">
+                <button type="submit" ng-click="webcamPost()">Upload</button>
+              </form>
+              <h1>WebcamJS Test Page</h1>
+              <h3>Demonstrates simple 320x240 capture &amp; display</h3>
+              
+              <div id="my_camera"></div>
+              
+              <!-- First, include the Webcam.js JavaScript Library -->
+              <script type="text/javascript" src="../webcam.js"></script>
+<!--               
+ -->              
+              <!-- Configure a few settings and attach camera (abstracted this out into the controller so webcam permission only requested upon opening modal) -->
+             <!--  <script language="JavaScript">
+                Webcam.set({
+                  width: 320,
+                  height: 240,
+                  image_format: 'jpeg',
+                  jpeg_quality: 90
+                });
+                Webcam.attach( '#my_camera' );
+              </script> -->
+              
+              <!-- A button for taking snaps -->
+              <form>
+                <input type=button value="Take Snapshot" ng-click="take_snapshot()">
+              </form>
+              
+               <!-- Code to handle taking the snapshot and displaying it locally -->
+              <script language="JavaScript">
+ 
+              </script>
+          </div>
+          </div>
+          </div>
+
+          <!-- #aboutMe Modal -->
+          <div id="aboutMeModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+          <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+              <h4>Hi, I'm Liam!</h4>
+              </div>
+              <div class="modal-body">
+                <div class="well"
+                  <p><span class="boldAbout">Birthday:</span> June 1, 2012</p>
+                  <p><span class="boldAbout">Favorite Foods:</span> Pancakes, Waffles, and Oatmeal</p>
+                  <p><span class="boldAbout">Favorite Color:</span> Green</p>
+                  <p><span class="boldAbout">Favorite Animal:</span> Elephants</p>
+                  <p><span class="boldAbout">Sibling:</span> Max Einstein</p>
+                </div>
+              </div>
+
+          </div>
+          </div>
+          </div>
+
+
+
+          <!-- #postModal start (regular bootstrap version) -->
+          <div id="postModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+          <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true" name="closePostModal">×</button>
+              <h4>Save a memory!</h4>
+              </div>
+              <div class="modal-body">
+                <ul class="nav nav-tabs" id="tabContent">
+                        <li class="active"><a href="#story" data-toggle="tab"><i class="glyphicon glyphicon-comment"></i><span>  Update Liam's Status</span></a></li>
+                        <li><a href="#upload" data-toggle="tab"><i class="glyphicon glyphicon-picture"></i><span>  Upload a Picture</span></a></li>
+                        <li><a href="#milestone" data-toggle="tab"><i class="glyphicon glyphicon-map-marker"></i><span>  Enter a Milestone</span></a></li>
+                        <!-- <li><a href="#video-link" data-toggle="tab"><i class="glyphicon glyphicon-link"></i></a></li>
+                        <li><a href="#animated-gif" data-toggle="tab"><i class="glyphicon glyphicon-facetime-video"></i></a></li> -->
+                </ul>
+                <div class="tab-content">
+                        <div class="tab-pane active" id="story">
+                          <div class="well">
+                            <form class="form center-block" name="storyForm">
+                              <div class="form-group">
+                                <textarea class="form-control input-lg" autofocus="" ng-model="storyForm.postText" placeholder="Add a story, share a quote, or write an update"></textarea>
+                              </div>
+                              <div class="modal-footer">
+                                <div>
+                                  <button class="btn btn-green btn-sm" data-dismiss="modal" aria-hidden="true" type="submit" ng-click="createStory()">Post</button>
+                                </div>  
+                              </div>
+                            </form>
+                           </div> 
+                          <div class="control-group">
+                            <label class="control-label"></label> 
+                          </div>
+                        </div>
+                        
+                        <div class="tab-pane" id="upload">
+                          <div class="well">
+                            <form class="form center-block" ng-submit="upload()" name="imageDateForm">
+                              <div class="form-group">
+                                
+                                <!-- <input ng-model="creds.access_key" type="text" class="form-control" placeholder="Access Key">
+                                <input ng-model="creds.secret_key" type="text" class="form-control" placeholder="Secret Key">
+                                <input ng-model="creds.bucket" type="text" class="form-control" placeholder="Bucket Name"> -->
+                                <input class="form-control bottom-marg-15" ng-model="file" type="file" name="file" file></input>
+                                <br>
+                                <!-- <span class="btn btn-green btn-file">
+                                  Browse <input class="form-control bottom-marg-15" ng-model="file" type="file" name="file" file></input>
+                                </span> -->
+                                <textarea class="form-control" type="text" placeholder="Enter a caption for your image" ng-model="postText"></textarea>
+                              </div>
+
+                                     <label>
+                                         When is this photo from? (Default value is today)
+                                         <span style="color:red" ng-show="imageDateForm.imagedate.$error.pattern">(1 Jan 2013)</span><span>
+                                     </label>
+                                     <input
+                                         type="date"
+                                         id="test"
+                                         name="imagedate"
+                                         ng-model="imageDate"
+                                         popup="d MMM yyyy"
+                                         options="dateOptions"
+                                         opened="opened"
+                                         custom-datepicker/>
+
+                                
+                                 <script type="text/ng-template" id="custom-datepicker.html">
+                                     <div class="form-inline enhanced-datepicker">
+                                         <label>
+                                             <input
+                                                 type="text"
+                                                 id="{{id}}"
+                                                 name="{{name}}"
+                                                 ng-model="ngModel"
+                                                 datepicker-popup="{{popup}}"
+                                                 datepicker-options="{{options}}"
+                                                 date-disabled="{{dateDisabled}}"
+                                                 min="{{min}}"
+                                                 max="{{max}}"
+                                                 open="opened"
+                                                 ng-pattern="/^(?:[1-9]|1\d|2\d|3[0-1]) (?:jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec) (?:1|2)(?:\d{3})$/gim"/>
+                                             <span class="btn"><i class="icon-calendar"></i></span>
+                                         </label>
+                                     </div>
+                                 </script>
+
+                              <div>
+                                <button class="btn btn-green btn-sm pull-right" type="submit" aria-hidden="true">Post</button><br><br>
+                              </div> 
+                            </form>
+                            <div class="progress">
+                              <div class="progress-bar" role="progressbar" aria-valuenow="{{ uploadProgress }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ uploadProgress }}%;">
+                                {{ uploadProgress == 0 ? '' : uploadProgress + '%' }}
+                              </div>
+                            </div>
+                            <div class="modal-footer">
+                              <!-- <div>
+                                <button class="btn btn-green btn-sm" type="submit" aria-hidden="true">Post</button>
+                              </div>  -->
+
+                            </div>
+                          </div>
+                        </div> 
+                        <div class="tab-pane" id="milestone">
+                          <div class="well">
+                            <form class="form center-block" name="milestoneForm">
+                              <div class="form-group">
+                                <select class="form-control" ng-model="milestoneForm.milestone">
+                                    <option>Rolled Over</option>
+                                    <option>Sat Up</option>
+                                    <option>Started Crawling</option>
+                                    <option>First Birthday</option>
+                                    <option>Teething</option>
+                                    <option>Started Walking</option>
+                                    <option>First Word</option>
+                                    <option>Learned to ride a bike</option>
+                                    <option>Lost First Tooth</option>
+                                </select>
+                                <br>
+                                <textarea class="form-control input-lg" autofocus="" ng-model="milestoneForm.postText" placeholder="Describe this milestone"></textarea>
+                              </div>
+                            </form>
+
+                          <div class="modal-footer">
+                            <div class="pull-right">
+                              <button class="btn btn-green btn-sm" data-dismiss="modal" aria-hidden="true" ng-click="createMilestone()">Post</button>
+                            </div>  
+                          </div>
+                          </div>
+                       </div> 
+                        <!-- <div class="tab-pane" id="video-link">
+                          <form class="form center-block">
+                            <div class="form-group">
+                              <textarea class="form-control input-lg" autofocus="" placeholder="Describe this YouTube link"></textarea>
+                              <input type="text" class="form-control" placeholder="YouTube Link">
+                            </div>
+                          </form>
+                          <div class="modal-footer">
+                            <div>
+                              <button class="btn btn-green btn-sm" data-dismiss="modal" aria-hidden="true">Post</button>
+                            </div>  
+                          </div>
+                       </div> 
+                        <div class="tab-pane" id="animated-gif">
+                          <form class="form center-block">
+                            <div class="form-group">
+                              <textarea class="form-control input-lg" autofocus="" placeholder="Describe this mini-video"></textarea>
+                              <p>Look at code from Gif your Face</p>
+                            </div>
+                          </form>
+                          <div class="modal-footer">
+                            <div>
+                              <button class="btn btn-green btn-sm" data-dismiss="modal" aria-hidden="true">Post</button>
+                            </div>  
+                          </div>
+                       </div>  -->
+                </div>
+              </div>
+          </div>
+          </div>
+          </div>
+
+
+
+                    
+
+        <!-- script references  -->
+          <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+          
+          <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+          <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.15/angular.js"></script>
+          <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.15/angular-route.min.js"></script>
+          <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.13.0.js"></script>
+          <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.1/toastr.js.map"></script>
+          <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>  
+          <script src="//sdk.amazonaws.com/js/aws-sdk-2.1.31.min.js"></script>
+          <script src="//cdnjs.cloudflare.com/ajax/libs/masonry/3.3.0/masonry.pkgd.min.js"></script>
+          <script src="main.js"></script>
+
+        </body>
+    </html>

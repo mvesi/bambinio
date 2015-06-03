@@ -1,0 +1,94 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="close()">×</button>
+    <h4>Save a memory!</h4>
+    </div>
+    <div class="modal-body">
+      <ul class="nav nav-tabs" id="tabContent">
+              <li class="active"><a href="#story" data-toggle="tab"><i class="glyphicon glyphicon-comment"></i></a></li>
+              <li><a href="#upload" data-toggle="tab"><i class="glyphicon glyphicon-picture"></i></a></li>
+              <li><a href="#milestone" data-toggle="tab"><i class="glyphicon glyphicon-map-marker"></i></a></li>
+              <li><a href="#video-link" data-toggle="tab"><i class="glyphicon glyphicon-link"></i></a></li>
+              <li><a href="#animated-gif" data-toggle="tab"><i class="glyphicon glyphicon-facetime-video"></i></a></li>
+      </ul>
+      <div class="tab-content">
+              <div class="tab-pane active" id="story">
+                <form class="form center-block" name="storyForm" ng-submit="createPost()">
+                  <div class="form-group">
+                    <textarea class="form-control input-lg" autofocus="" ng-model="storyForm.postText" placeholder="Add a story, share a quote, or write an update"></textarea>
+                  </div>
+                  <div class="modal-footer">
+                    <div>
+                      <button class="btn btn-primary btn-sm" data-dismiss="modal" aria-hidden="true" type="submit">Post</button>
+                    </div>  
+                  </div>
+                </form>
+                
+                <div class="control-group">
+                  <!-- <label class="control-label"></label> -->
+                </div>
+              </div>
+              
+              <div class="tab-pane" id="upload">
+                <form class="form center-block">
+                  <div class="form-group">
+                    <textarea class="form-control input-lg" autofocus="" placeholder="Enter a caption for your image"></textarea>
+                    <span class="btn btn-primary btn-file">
+                      Browse <input class="form-control bottom-marg-15" ng-model="file" type="file" name="file" file></input>
+                    </span>
+                  </div>
+                </form>
+                <div class="modal-footer">
+                  <div>
+                    <button class="btn btn-primary btn-sm" data-dismiss="modal" aria-hidden="true">Post</button>
+                  </div>  
+                </div>
+              </div> 
+              <div class="tab-pane" id="milestone">
+                <form class="form center-block">
+                  <div class="form-group">
+                    <textarea class="form-control input-lg" autofocus="" placeholder="Describe this milestone"></textarea>
+                    <select class="form-control">
+                        <option>Crawling</option>
+                        <option>Walking</option>
+                        <option>First Word</option>
+                    </select>
+                  </div>
+                </form>
+                <div class="modal-footer">
+                  <div>
+                    <button class="btn btn-primary btn-sm" data-dismiss="modal" aria-hidden="true">Post</button>
+                  </div>  
+                </div>
+             </div> 
+              <div class="tab-pane" id="video-link">
+                <form class="form center-block">
+                  <div class="form-group">
+                    <textarea class="form-control input-lg" autofocus="" placeholder="Describe this YouTube link"></textarea>
+                    <input type="text" class="form-control" placeholder="YouTube Link">
+                  </div>
+                </form>
+                <div class="modal-footer">
+                  <div>
+                    <button class="btn btn-primary btn-sm" data-dismiss="modal" aria-hidden="true">Post</button>
+                  </div>  
+                </div>
+             </div> 
+              <div class="tab-pane" id="animated-gif">
+                <form class="form center-block">
+                  <div class="form-group">
+                    <textarea class="form-control input-lg" autofocus="" placeholder="Describe this mini-video"></textarea>
+                    <p>Look at code from Gif your Face</p>
+                  </div>
+                </form>
+                <div class="modal-footer">
+                  <div>
+                    <button class="btn btn-primary btn-sm" data-dismiss="modal" aria-hidden="true">Post</button>
+                  </div>  
+                </div>
+             </div> 
+      </div>
+      <button type="button" ng-click="close('No')" class="btn btn-default" data-dismiss="modal">No</button>
+      <button type="button" ng-click="close('Yes')" class="btn btn-primary" data-dismiss="modal">Yes</button>
+    </div>
+</div>

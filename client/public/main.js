@@ -70,11 +70,13 @@ bambinioApp.controller('profileController', function($scope, $http, $timeout, $r
         var postType = "glyphicon glyphicon-comment";
         if(!$scope.storyForm.postText){
             var postText = $scope.quickForm.postText;
+            var postedAt = Date.now();
         }
         else{
             var postText = $scope.storyForm.postText;
+            var postedAt = $scope.storyDate;
         }
-        $http.post('/api/posts', {postText: postText, postType: postType})
+        $http.post('/api/posts', {postText: postText, postType: postType, postedAt: postedAt})
         .success(function(data){
             console.log(data);
             // Not ideal as $route.reload() resets the routers, but wasn't working in modal with just gePosts().  getPosts() does work just done from the quick status form.
@@ -91,7 +93,7 @@ bambinioApp.controller('profileController', function($scope, $http, $timeout, $r
         console.log($scope.milestoneForm.postText);
         console.log($scope.milestoneForm.milestone);
         var postType = "glyphicon glyphicon-map-marker";
-        $http.post('/api/posts', {postText: $scope.milestoneForm.postText, milestone: $scope.milestoneForm.milestone, postType: postType})
+        $http.post('/api/posts', {postText: $scope.milestoneForm.postText, milestone: $scope.milestoneForm.milestone, postedAt: $scope.milestoneDate, postType: postType})
         .success(function(data){
             console.log(data);
             // Not ideal as $route.reload() resets the routers, but wasn't working in modal with just gePosts().  getPosts() does work just done from the quick status form.

@@ -149,9 +149,50 @@
           </div>
           <!-- End albumVModal -->
 
-
-          <!-- #webCam modal -->
+          <!-- NEW #webCam Modal -->
           <div id="webCamModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+          <div class="modal-dialog">
+          <div class="modal-content">
+          <div class="container">
+            
+            <h1>Snap a picture with Liam!</h1>
+                       
+            <div id="my_camera"></div>
+            
+            <!-- First, include the Webcam.js JavaScript Library -->
+            <script type="text/javascript" src="../webcam.js"></script>
+            
+            
+            <!-- A button for taking snaps -->
+           
+              <form>
+                <input type=button value="Take Snapshot" onClick="take_snapshot()">
+              </form>
+
+              <div id="results">Your captured image will appear here...</div><br><br>
+  
+            
+            <!-- Code to handle taking the snapshot and displaying it locally -->
+            <script language="JavaScript">
+              function take_snapshot() {
+                // take snapshot and get image data
+                Webcam.snap( function(data_uri) {
+                  // display results in page
+                  document.getElementById('results').innerHTML = 
+                    '<h2>Looking good!</h2>' + 
+                    '<img src="'+data_uri+'"/>';
+                } );
+              }
+            </script>
+            </div>
+            </div>
+            </div>
+            </div>
+
+
+
+          <!-- OLD #webCam modal -->
+ <!--          <div id="webCamModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
           <div class="modal-dialog">
           <div class="modal-content">
             <div id="results" ng-model="webcamImage">Your captured image will appear here...</div>
@@ -163,10 +204,10 @@
               <h1>WebcamJS Test Page</h1>
               <h3>Demonstrates simple 320x240 capture &amp; display</h3>
               
-              <div id="my_camera"></div>
+              <div id="my_camera"></div> -->
               
               <!-- First, include the Webcam.js JavaScript Library -->
-              <script type="text/javascript" src="../webcam.js"></script>
+              <!-- <script type="text/javascript" src="../webcam.js"></script> -->
 <!--               
  -->              
               <!-- Configure a few settings and attach camera (abstracted this out into the controller so webcam permission only requested upon opening modal) -->
@@ -181,17 +222,17 @@
               </script> -->
               
               <!-- A button for taking snaps -->
-              <form>
-                <input type=button value="Take Snapshot" ng-click="take_snapshot()">
+              <!-- <form>
+                <input type=button value="Take Snapshot" ong-lick="take_snapshot()">
               </form>
               
-               <!-- Code to handle taking the snapshot and displaying it locally -->
+               Code to handle taking the snapshot and displaying it locally
               <script language="JavaScript">
  
               </script>
           </div>
           </div>
-          </div>
+          </div> -->
 
           <!-- #aboutMe Modal -->
           <div id="aboutMeModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
@@ -240,6 +281,40 @@
                               <div class="form-group">
                                 <textarea class="form-control input-lg" autofocus="" ng-model="storyForm.postText" placeholder="Add a story, share a quote, or write an update"></textarea>
                               </div>
+                                  <label>
+                                      When did this happen? (Default value is today)
+                                      <span style="color:red" ng-show="storyForm.storydate.$error.pattern">(1 Jan 2013)</span><span>
+                                  </label>
+                                  <input
+                                      type="date"
+                                      id="test"
+                                      name="storydate"
+                                      ng-model="storyDate"
+                                      popup="d MMM yyyy"
+                                      options="dateOptions"
+                                      opened="opened"
+                                      custom-datepicker/>
+
+                              
+                              <script type="text/ng-template" id="custom-datepicker.html">
+                                  <div class="form-inline enhanced-datepicker">
+                                      <label>
+                                          <input
+                                              type="text"
+                                              id="{{id}}"
+                                              name="{{name}}"
+                                              ng-model="ngModel"
+                                              datepicker-popup="{{popup}}"
+                                              datepicker-options="{{options}}"
+                                              date-disabled="{{dateDisabled}}"
+                                              min="{{min}}"
+                                              max="{{max}}"
+                                              open="opened"
+                                              ng-pattern="/^(?:[1-9]|1\d|2\d|3[0-1]) (?:jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec) (?:1|2)(?:\d{3})$/gim"/>
+                                          <span class="btn"><i class="icon-calendar"></i></span>
+                                      </label>
+                                  </div>
+                              </script>
                               <div class="modal-footer">
                                 <div>
                                   <button class="btn btn-green btn-sm" data-dismiss="modal" aria-hidden="true" type="submit" ng-click="createStory()">Post</button>
@@ -338,6 +413,40 @@
                                 <br>
                                 <textarea class="form-control input-lg" autofocus="" ng-model="milestoneForm.postText" placeholder="Describe this milestone"></textarea>
                               </div>
+                                  <label>
+                                      When was this milestone? (Default value is today)
+                                      <span style="color:red" ng-show="milestoneForm.milestonedate.$error.pattern">(1 Jan 2013)</span><span>
+                                  </label>
+                                  <input
+                                      type="date"
+                                      id="test"
+                                      name="milestonedate"
+                                      ng-model="milestoneDate"
+                                      popup="d MMM yyyy"
+                                      options="dateOptions"
+                                      opened="opened"
+                                      custom-datepicker/>
+
+                              
+                              <script type="text/ng-template" id="custom-datepicker.html">
+                                  <div class="form-inline enhanced-datepicker">
+                                      <label>
+                                          <input
+                                              type="text"
+                                              id="{{id}}"
+                                              name="{{name}}"
+                                              ng-model="ngModel"
+                                              datepicker-popup="{{popup}}"
+                                              datepicker-options="{{options}}"
+                                              date-disabled="{{dateDisabled}}"
+                                              min="{{min}}"
+                                              max="{{max}}"
+                                              open="opened"
+                                              ng-pattern="/^(?:[1-9]|1\d|2\d|3[0-1]) (?:jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec) (?:1|2)(?:\d{3})$/gim"/>
+                                          <span class="btn"><i class="icon-calendar"></i></span>
+                                      </label>
+                                  </div>
+                              </script>
                             </form>
 
                           <div class="modal-footer">

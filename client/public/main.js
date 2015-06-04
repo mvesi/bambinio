@@ -178,11 +178,12 @@ bambinioApp.controller('profileController', function($scope, $http, $timeout, $r
         $('#uploadPost').button('loading');
         Upload.upload({
             url: "/api/uploads",
-            fields: {postText: $scope.postText},
+            fields: {postText: $scope.postText, postedAt: $scope.imageDate},
             file: $scope.file
         }).success(function(data){
             console.log(data);
             $('#uploadPost').button('reset');
+            $('#postModal').modal('toggle');
             $route.reload();
         });
 

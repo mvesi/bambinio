@@ -68,6 +68,7 @@ var apiController = {
     var fPath = req.files.file.path;
     var cType = req.files.file.type;
     var size = req.files.file.size;
+    console.log(req.body.postedAt);
 
     fs.readFile(fPath, function (err, data) {
       console.log(err);
@@ -78,23 +79,23 @@ var apiController = {
         ACL: 'public-read',
         Body: data
       }, function (err, result) {
-        console.log(err, result);
+        // console.log(err, result);
         if(!req.body.postedAt){
           req.body.postedAt = Date.now();
         }
-        var newPost = new Post({postText: req.body.postText, s3Link: fName, postedAt: req.body.postedAt, milestone: req.body.milestone, postType: req.body.postType});
+        var newPost = new Post({postText: req.body.postText, s3Link: fName, postedAt: req.body.postedAt, milestone: req.body.milestone, postType: "glyphicon glyphicon-picture"});
         console.log(newPost);
         fs.unlink(fPath);
 
         newPost.save(function(err, results){
-          console.log(results);
+          // console.log(results);
           res.send(results);
         });
 
       });
     });
-    console.log(req.body);
-    console.log(req.files);
+    // console.log(req.body);
+    // console.log(req.files);
     }
   // putComment: function(req, res){
   //   console.log('test');

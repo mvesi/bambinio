@@ -107,15 +107,6 @@
                 </carousel>
               </div>
               
-              <!-- <div class="row">
-                <div class="col-md-6">
-                  <button type="button" class="btn btn-info" ng-click="addSlide()">Add Slide</button>
-                </div>
-                <div class="col-md-6">
-                  Interval, in milliseconds: <input type="number" class="form-control" ng-model="myInterval">
-                  <br />Enter a negative number or 0 to stop the interval.
-                </div>
-              </div> -->
             </div>
           </div>
           </div>
@@ -190,50 +181,6 @@
             </div>
 
 
-
-          <!-- OLD #webCam modal -->
- <!--          <div id="webCamModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-          <div class="modal-dialog">
-          <div class="modal-content">
-            <div id="results" ng-model="webcamImage">Your captured image will appear here...</div>
-              <form>
-                <input ng-model="postText" type="text" class="form-control" placeholder="Image Description">
-                <input ng-model="webcamImage" type="text" class="form-control" value="bonkers">
-                <button type="submit" ng-click="webcamPost()">Upload</button>
-              </form>
-              <h1>WebcamJS Test Page</h1>
-              <h3>Demonstrates simple 320x240 capture &amp; display</h3>
-              
-              <div id="my_camera"></div> -->
-              
-              <!-- First, include the Webcam.js JavaScript Library -->
-              <!-- <script type="text/javascript" src="../webcam.js"></script> -->
-<!--               
- -->              
-              <!-- Configure a few settings and attach camera (abstracted this out into the controller so webcam permission only requested upon opening modal) -->
-             <!--  <script language="JavaScript">
-                Webcam.set({
-                  width: 320,
-                  height: 240,
-                  image_format: 'jpeg',
-                  jpeg_quality: 90
-                });
-                Webcam.attach( '#my_camera' );
-              </script> -->
-              
-              <!-- A button for taking snaps -->
-              <!-- <form>
-                <input type=button value="Take Snapshot" ong-lick="take_snapshot()">
-              </form>
-              
-               Code to handle taking the snapshot and displaying it locally
-              <script language="JavaScript">
- 
-              </script>
-          </div>
-          </div>
-          </div> -->
-
           <!-- #aboutMe Modal -->
           <div id="aboutMeModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
           <div class="modal-dialog">
@@ -271,8 +218,6 @@
                         <li class="active"><a href="#story" data-toggle="tab"><i class="glyphicon glyphicon-comment"></i><span>  Update Miles's Status</span></a></li>
                         <li><a href="#upload" data-toggle="tab"><i class="glyphicon glyphicon-picture"></i><span>  Upload a Picture</span></a></li>
                         <li><a href="#milestone" data-toggle="tab"><i class="glyphicon glyphicon-map-marker"></i><span>  Enter a Milestone</span></a></li>
-                        <!-- <li><a href="#video-link" data-toggle="tab"><i class="glyphicon glyphicon-link"></i></a></li>
-                        <li><a href="#animated-gif" data-toggle="tab"><i class="glyphicon glyphicon-facetime-video"></i></a></li> -->
                 </ul>
                 <div class="tab-content">
                         <div class="tab-pane active" id="story">
@@ -331,15 +276,8 @@
                           <div class="well">
                             <form class="form center-block" ng-submit="upload()" name="imageDateForm">
                               <div class="form-group">
-                                
-                                <!-- <input ng-model="creds.access_key" type="text" class="form-control" placeholder="Access Key">
-                                <input ng-model="creds.secret_key" type="text" class="form-control" placeholder="Secret Key">
-                                <input ng-model="creds.bucket" type="text" class="form-control" placeholder="Bucket Name"> -->
                                 <input class="form-control bottom-marg-15" ng-model="file" type="file" name="file" ngf-select></input>
                                 <br>
-                                <!-- <span class="btn btn-green btn-file">
-                                  Browse <input class="form-control bottom-marg-15" ng-model="file" type="file" name="file" file></input>
-                                </span> -->
                                 <textarea class="form-control" type="text" placeholder="Enter a caption for your image" ng-model="postText"></textarea>
                               </div>
 
@@ -382,16 +320,7 @@
                                 <button class="btn btn-green btn-sm pull-right" type="submit" aria-hidden="true" id="uploadPost" data-loading-text="Saving...">Post</button><br><br>
                               </div> 
                             </form>
-                            <!-- <div class="progress">
-                              <div class="progress-bar" role="progressbar" aria-valuenow="{{ uploadProgress }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ uploadProgress }}%;">
-                                {{ uploadProgress == 0 ? '' : uploadProgress + '%' }}
-                              </div>
-                            </div> -->
                             <div class="modal-footer">
-                              <!-- <div>
-                                <button class="btn btn-green btn-sm" type="submit" aria-hidden="true">Post</button>
-                              </div>  -->
-
                             </div>
                           </div>
                         </div> 
@@ -456,32 +385,6 @@
                           </div>
                           </div>
                        </div> 
-                        <!-- <div class="tab-pane" id="video-link">
-                          <form class="form center-block">
-                            <div class="form-group">
-                              <textarea class="form-control input-lg" autofocus="" placeholder="Describe this YouTube link"></textarea>
-                              <input type="text" class="form-control" placeholder="YouTube Link">
-                            </div>
-                          </form>
-                          <div class="modal-footer">
-                            <div>
-                              <button class="btn btn-green btn-sm" data-dismiss="modal" aria-hidden="true">Post</button>
-                            </div>  
-                          </div>
-                       </div> 
-                        <div class="tab-pane" id="animated-gif">
-                          <form class="form center-block">
-                            <div class="form-group">
-                              <textarea class="form-control input-lg" autofocus="" placeholder="Describe this mini-video"></textarea>
-                              <p>Look at code from Gif your Face</p>
-                            </div>
-                          </form>
-                          <div class="modal-footer">
-                            <div>
-                              <button class="btn btn-green btn-sm" data-dismiss="modal" aria-hidden="true">Post</button>
-                            </div>  
-                          </div>
-                       </div>  -->
                 </div>
               </div>
           </div>
